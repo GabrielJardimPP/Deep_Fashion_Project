@@ -63,6 +63,21 @@ def gen_processed_list_eval_partition(path_list_eval_partition):
     return processed_list_eval_partition
 
 
+def gen_full_anno(processed_list_eval_partition, list_landmarks_consumer2shop, bbox=True, features = True):
+
+    landmarks_consumer2shop = pd.read_table(list_landmarks_consumer2shop,
+                                            delim_whitespace=True, skiprows=0, header=1)
+    full_anno = processed_list_eval_partition.merge(landmarks_consumer2shop,
+                                                    how='outer', on='image_name')
+    if bbox:
+        bbox_consumer2shop = pd.read_table(list_bbox_consumer2shop,
+                                                delim_whitespace=True, skiprows=0, header=1)
+        full_anno = full_anno.merge(bbox_consumer2shop, how='outer', on='image_name')
+    if features:
+        attr_consumer2shop =  pd.read_table(list_attr_items,
+                                                delim_whitespace=True, skiprows=0, header=1)
+        full_anno = full_anno.merge(attr_consumer2shop,how='outer', on='item_id', validate='m:m')
+    return full_anno
 
 
 if __name__ == '__main__':
@@ -71,4 +86,3 @@ if __name__ == '__main__':
     attr_type_dict = generate_attr_type_dict(list_attr_type)
     category_data = merge_attr_types_names(attr_type_dict, category_list)
     train_ids_set, val_ids_set, test_ids_set = get_item_ids_partition_sets(list_eval_partition)
-    processed_list_eval_partition = gen_processed_list_eval_partition(list_eval_partition)

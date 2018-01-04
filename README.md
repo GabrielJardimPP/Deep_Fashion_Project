@@ -1,3 +1,3 @@
 # Deep_Fashion_Project
-Final Project of Machine Learning Course - EMAp FGV blah
+Final Project of Machine Learning Course - EMAp FGV
 

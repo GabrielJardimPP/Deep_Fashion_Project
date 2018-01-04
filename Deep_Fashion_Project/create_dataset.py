@@ -55,15 +55,18 @@ def get_item_ids_partition_sets(path_list_eval_partition):
 def gen_processed_list_eval_partition(path_list_eval_partition):
     df_list_eval_partition = pd.read_table(path_list_eval_partition,
                                            delim_whitespace=True, skiprows=0, header=1)
-    consumer_files = df_list_eval_partition.drop('image_pair_name_2', axis=1)
+    consumer_files = df_list_eval_partition.drop('image_pair_name_2', axis=1).drop_duplicates()
     consumer_files = consumer_files.rename(columns={'image_pair_name_1': 'image_name'})
     shop_files = df_list_eval_partition.drop('image_pair_name_1', axis=1).drop_duplicates()
     shop_files = shop_files.rename(columns={'image_pair_name_2': 'image_name'})
-    processed_list_eval_partition = consumer_files.append(shop_files, ignore_index = True)
+    processed_list_eval_partition = consumer_files.append(shop_files, ignore_index=True)
     return processed_list_eval_partition
 
 
-# def gen_full_anno(processed_list_eval_partition, ):
+#
+# def gen_full_anno(processed_list_eval_partition, path_list_bbox_consumer2shop,
+#                   path_list_item_consumer2shop, path_list_landmarks_consumer2shop):
+#     for
 
 
 if __name__ == '__main__':
@@ -72,3 +75,4 @@ if __name__ == '__main__':
     attr_type_dict = generate_attr_type_dict(list_attr_type)
     category_data = merge_attr_types_names(attr_type_dict, category_list)
     train_ids_set, val_ids_set, test_ids_set = get_item_ids_partition_sets(list_eval_partition)
+    processed_list_eval_partition = gen_processed_list_eval_partition(list_eval_partition)

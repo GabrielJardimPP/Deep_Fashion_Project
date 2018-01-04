@@ -63,10 +63,6 @@ def gen_processed_list_eval_partition(path_list_eval_partition):
     return processed_list_eval_partition
 
 
-#
-# def gen_full_anno(processed_list_eval_partition, path_list_bbox_consumer2shop,
-#                   path_list_item_consumer2shop, path_list_landmarks_consumer2shop):
-#     for
 
 
 if __name__ == '__main__':
